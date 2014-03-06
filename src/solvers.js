@@ -75,8 +75,6 @@ window.findNQueensSolution = function(n) {
   }else{
 
 
-
-
   for (var i = 0; i < n; i++) {
     if(j>=n){
       j=1;
@@ -105,24 +103,69 @@ window.countNQueensSolutions = function(n) {
 var myBoard = new Board({n: n});
   var placeQueen = function(){
     var currentBoard = myBoard;
-    for (var i = 0; i < n; i++) {
-      for(var j = 0; j< n; j++){
-        if(currentBoard.rows()[i][j] !== -1){
-          currentBoard.rows()[i][j] = 1;
+    for (var r = 0; r < n; r++) {
+      for(var c = 0; c< n; c++){
+        if(currentBoard.rows()[r][c] !== -1){
+          currentBoard.rows()[r][c] = 1;
+          attackMove(currentBoard, r, c, n);
         }
       }
 
      }
  };
-var attackMove = function(board, position){
+var attackMove = function(board, qr, qc, n){
   //[0,0] 0th row & 0th colums all -1
   // for i =0 i++, 0+i,0+i all -1
   // 0-i, 0+i all -1
   //
-}
+  for (var k = 1; k < n-qc; k++) {
+    board.rows()[qr][k+qc] = -1;
+  }
+
+  for (var j = 1; j < n-qr; j++) {
+    board.rows()[qr+j][qc] = -1;
+  }
+
+
+  if(qr>qc){
+    var l = qc;
+  }else{
+    var l = qr;
+  }
+
+  for (var m = 1; m < n-2-l; m++) {
+    board.rows()[qr+m][qc+m] = -1;
+  }
+
+  var z = 0;
+
+  if(n - qr > qc){
+    z = qc;
+  }else{
+    z = n - qr;
+  }
+
+  for (var o = 1; o <= z; o++){
+    board.rows()[qr+o][qc-o] = -1;
+  }
+};
+
 
 
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
